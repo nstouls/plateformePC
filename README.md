@@ -15,6 +15,10 @@ Installing mongoDB :
 # Starting platforme
 
 Running mongoDB :
-  docker run -d --name plateformeDB -v /home/pi/plateformePC/DB:/data/db -p 27017:27017 descol/rpi-mongo
+    docker run -d --name plateformeDB -v /home/pi/plateformePC/DB:/data/db -p 27017:27017 descol/rpi-mongo
+  ou 
+    docker run -d --name plateformeDB -v /home/pi/plateformePC/DB:/data/db -p 27017:27017 mangoraft/mongodb-arm
   docker start plateformeDB
-  sudo ./gradlew runShadow
+  --- sudo ./gradlew runShadow
+  sudo java -jar Plateforme-fat.jar 
+
