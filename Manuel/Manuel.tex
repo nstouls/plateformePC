@@ -1,0 +1,122 @@
+\documentclass[a4paper]{article}
+%% Language and font encodings
+\usepackage[francais]{babel}
+\usepackage[utf8x]{inputenc}
+\usepackage[T1]{fontenc}
+%% Import des packages importants
+\usepackage{booktabs}
+\usepackage{setspace}
+\usepackage[a4paper]{geometry}
+\geometry{hmargin=2.5cm,vmargin=3cm}
+\setlength{\parindent}{0.5cm}
+\setlength{\parskip}{5px}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage[colorlinks=true, allcolors=blue]{hyperref}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage[colorinlistoftodos]{todonotes}
+
+
+\begin{document}
+
+\begin{center}
+\textsc{\LARGE{\textbf{MANUEL D'INSTALLATION}}}\\[2cm]
+\end{center}
+
+\section{Récupération des sources:}
+Les sources de la plateforme sont accessibles directement via GitHub via cette URL: \url{https://github.com/aclaude1/plateformePC}. Est présent dans ce répertoire:
+\begin{enumerate}
+\item Les sources Java du \href{https://github.com/aclaude1/plateformePC/tree/master/src/main/java/io/vertx/blog/plateforme}{serveur}
+\item Les sources du \href{https://github.com/aclaude1/plateformePC/tree/master/ressources}{Front-End}
+\item \href{https://github.com/aclaude1/plateformePC/tree/master/Exemple_HelloWorld}{Un exemple de driver de test}
+\end{enumerate}
+
+\section{Configuration de Docker}
+La plateforme utilise Docker pour pouvoir fonctionner. La première chose à faire est d'installer de de configurer Docker sur la machine host.
+\subsection{Installation de Docker}
+La documentation officielle de Docker présente comment installer le démon Docker sur une machine, quelque soit son OS (Linux, Mac-OS, et même Windows). Cependant, nous devons installer la plateforme sur une machine Linux, il faut donc aller sur cette URL: \url{https://docs.docker.com/engine/installation/linux/}. \\
+Comme expliqué dans la documentation Docker, une simple commande permet de savoir très rapidement si l'installation a correctement été réalisée:
+\begin{lstlisting}[language=bash]
+  $ sudo docker run hello-world
+\end{lstlisting}
+Cette commande télécharge depuis le DockerHub la petite image \textit{hello-world:lastest} et lance un composant ce cette image. Si l'installation à correctement été réussie, un petit message d'accueil apparaît.
+
+\subsection{Configuration de l'utilisation de docker}
+Lors de l'utilisation de toutes commandes Docker, le démon docker tournant sur la machine est contacté. Par défaut, seul le super utilisateur est autorisé à le contacté, et donc à exécuter des commandes docker. De ce fait, toutes commandes \textit{docker} doivent être utilisées avec \textit{sudo}, sinon, les requêtes n'aboutiront pas. \\
+La plateforme ayant besoin de contacter le démon docker pour pouvoir fonctionner, deux solutions sont envisageables:
+\begin{enumerate}
+\item Le lancement de la plateforme sera lui aussi effectué en mode root.
+\item On ajoute un utilisateur pour le management de docker. Cette manipulation autorise un utilisateur lambda à contacté le démon Docker, et donc nous n'aurons plus besoin de lancer la plateforme avec le mot-clef \textit{root}. Les détails de cette manipulation sont expliqués ici: \url{https://docs.docker.com/engine/installation/linux/linux-postinstall/#/manage-docker-as-a-non-root-user}.
+\end{enumerate}
+
+\subsection{Création de l'image docker \textit{alexandreinsa/base-plateforme}}
+La plateforme a besoin de l'image alexandreinsa/base-plateforme: elle sert de base pour construire les images que l'on crée lors de la création d'un nouvel exercice. \\
+Cette image docker est stockée sur le DockerHub, c'est pourquoi il est très facile de la récupérer:
+\begin{lstlisting}[language=bash]
+  $ sudo docker pull alexandreinsa/base-plateforme
+\end{lstlisting}
+Au besoin, le fichier Dockerfile de cette image est disponible dans le répertoire /base-plateforme (où / est la base du répertoire du git).
+Une fois dans ce répertoire, il suffit de demander la création de l'image grâce au fichier Dockerfile:
+\begin{lstlisting}[language=bash]
+  $ sudo docker build -t alexandreinsa/base-plateforme .
+\end{lstlisting}
+\textit{Note: Le point est important et fait partie de la commande.}\\
+On peut vérifier la présence de l'image grâce à:
+\begin{lstlisting}[language=bash]
+  $ sudo docker images
+\end{lstlisting}
+
+\section{La base MongoDB}
+\subsection{Récupération de l'image Docker}
+La base mongoDB peut facilement être installée grâce à l'outil Docker, il suffit de récupérer la bonne image:
+\begin{lstlisting}[language=bash]
+  $ sudo docker pull mongo
+\end{lstlisting}
+\subsection{Lancement de la base}
+Le lancement de la base se fait donc via Docker
+La base mongoDB peut facilement être installée grâce à l'outil Docker, il suffit de récupérer la bonne image:
+\begin{lstlisting}[language=bash]
+$ sudo docker -d --name plateformeDB [-v </RepertoireHote>:/data/db] 
+-p 27017:27017 mongo
+\end{lstlisting}
+Quelques précisions:
+\begin{enumerate}
+\item Le nom de la plateforme (ici plateformeDB) est arbitraire, mais il faut s'en souvenir dans le cas où on aurait besoin de relancer le composant, ou d'aller directement voir dans la base de données. \\
+\textit{Note: il peut facilement être retrouvé grâce à \$ sudo docker ps -a}.
+\item L'option facultative -v permet de lier les données de la base de données à un répertoire dans le système hôte. C'est pratique si par exemple on a prévu de migrer les données vers un autre système physique.\\
+\textit{Note: il faut que le répertoire hôte soit indiqué via un chemin absolu. Pour plus de précision, se référer \href{https://docs.docker.com/engine/reference/commandline/run/\#/mount-volume--v---read-only}{ici}}
+\end{enumerate}
+La base est maintenant lancée et le serveur saura s'y connecter de manière automatique, tout en créant les différentes COLLECTIONS au besoin. Si jamais la machine hôte tombe en panne, il suffit de relancer le composant, les données seront conservées.
+\begin{lstlisting}[language=bash]
+  $ sudo docker start plateformeDB
+\end{lstlisting}
+\subsection{Lignes de commandes}
+Il est utile de connaître quelques commandes de shell MongoDB, au cas où on aurait besoin d'aller vérifier directement les données.\\
+Connexion à la base de donnée:
+\begin{lstlisting}[language=bash]
+  $ sudo docker exec -it plateformeDB mongo
+\end{lstlisting}
+Utilisation de la base de donnée "plateforme" (utilisée par le serveur)
+\begin{lstlisting}[language=bash]
+  > use plateforme
+\end{lstlisting}
+Le serveur utilise la COLLECTION "Exercices", pour récupérer tous les exercices présents dans la base, on fait donc:
+\begin{lstlisting}[language=bash]
+  > db.Exercices.find()
+\end{lstlisting}
+Pour rechercher par exemple l'exercice ayant pour nom d'utilisation côté serveur (nom unique d'utilisation côté serveur) "Hello\_World", on fait:
+\begin{lstlisting}[language=bash]
+  > db.Exercices.find({nomExoRepertoire : "Hello_World"})
+\end{lstlisting}
+
+\section{Lancement de la plateforme}
+Une fois ces préparatifs réalisés, il ne reste plus qu'à lancer la plateforme. Avec VertX, le plus simple est de lancer un JAR, qui est facile via Gradle:
+\begin{lstlisting}[language=bash]
+  $ sudo ./gradlew runShadow
+\end{lstlisting}
+La page d'accueil sera directement accessible depuis un navigateur à l'URL \url{http://localhost:8080/ressources/index.html}.
+
+
+\end{document}
