@@ -298,6 +298,8 @@ public class VerticlePlateforme extends AbstractVerticle{
 
         //Déclaration d'un FileSystem
         FileSystem fileSys = vertx.fileSystem();
+
+
         Set<FileUpload> setFile = routingContext.fileUploads();
         Iterator<FileUpload> it = setFile.iterator();
 
@@ -348,7 +350,9 @@ System.out.println("##### Exo tout neuf");
                     String repExercice = "exercices/"+nomExoRepertoire;
                     String repRessource = "ressources/"+repExercice;
                     //Création des répertoires
-                    fileSys.mkdirBlocking(repExercice);
+System.out.println("##### On va créer un dossier ici : "+fileSys);
+                    fileSys.mkdir(repExercice, null);
+System.out.println("##### Et de un !!! ");
                     fileSys.mkdirBlocking(repRessource);
 
                     /** Déplacement des fichers dans le repertoire adéquat*/
