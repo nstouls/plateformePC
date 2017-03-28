@@ -7,6 +7,8 @@ import io.vertx.core.json.JsonObject;
 import io.vertx.core.json.JsonArray;
 import io.vertx.core.file.FileSystem;
 import io.vertx.core.MultiMap;
+import io.vertx.core.VertxOptions;
+import io.vertx.core.Vertx;
 
 import io.vertx.ext.web.Router;
 import io.vertx.ext.web.RoutingContext;
@@ -51,6 +53,13 @@ public class VerticlePlateforme extends AbstractVerticle{
 
     @Override
     public void start (Future<Void> fut){
+        /** On prévoie diminue la durée du timout.
+        */
+        //VertxOptions options = new VertxOptions();
+        //options.setMaxEventLoopExecuteTime(Long.MAX_VALUE);
+        //vertx.vertx(options);
+        //vertx.vertx(options);
+
         //Creation de l'objet Router (permettant les routes http)
         Router router = Router.router(vertx);
 
@@ -509,5 +518,13 @@ public class VerticlePlateforme extends AbstractVerticle{
             res.add(str.trim());
         }
         return res;
+    }
+
+    public static void main(String... args) {
+        System.out.println("Here we go...");
+        VertxOptions options = new VertxOptions();
+        options.setMaxEventLoopExecuteTime(Long.MAX_VALUE);
+        Vertx vertx = Vertx.vertx(options);
+        vertx.deployVerticle(new VerticlePlateforme());
     }
 }

@@ -10,7 +10,8 @@ repositories {
 }
 
 sourceCompatibility = '1.8'
-mainClassName = 'io.vertx.core.Launcher'
+//mainClassName = 'io.vertx.core.Launcher'
+mainClassName = 'io.vertx.blog.plateforme.VerticlePlateforme'
 
 dependencies {
 //    compile 'org.slf4j:slf4j-api:1.7.21'
