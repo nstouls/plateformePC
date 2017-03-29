@@ -173,7 +173,7 @@ public class VerticlePlateforme extends AbstractVerticle{
         .end(str);
 
         //Suppression du répertoire client
-        fileSys.deleteRecursiveBlocking(repEtudiant,true);
+        //fileSys.deleteRecursiveBlocking(repEtudiant,true);
     }
 
     /** Récupérer tout les exercices de la BD */
