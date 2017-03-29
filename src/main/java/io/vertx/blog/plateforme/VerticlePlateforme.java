@@ -335,28 +335,28 @@ public class VerticlePlateforme extends AbstractVerticle{
         String rendus = routingContext.request().getParam("rendus");
         JsonArray listRendus = makeJsonArray(rendus);
 
-System.out.println("##### Fin de l'analyse des inputs");
+//System.out.println("##### Fin de l'analyse des inputs");
 
         /** TEST SI L'EXERCICE EXISTE DEJA **/
         JsonObject query = new JsonObject().put("nomExoRepertoire",nomExoRepertoire);
         mongoClient.findBatch("Exercices", query, res1 -> {
             if (res1.succeeded()) {
-System.out.println("##### Secceded");
+//System.out.println("##### Secceded");
                 if (res1.result() == null) {
-System.out.println("##### Exo tout neuf");
+//System.out.println("##### Exo tout neuf");
 
                     //L'exercice n'est pas présent, on continue la requête
                     // Création d'un répertoire pour cet exercice
                     String repExercice = "exercices/"+nomExoRepertoire;
                     String repRessource = "ressources/"+repExercice;
                     //Création des répertoires
-System.out.println("##### On va créer un dossier ici : "+fileSys);
-                    fileSys.mkdir(repExercice, null);
-System.out.println("##### Et de un !!! ");
-                    fileSys.mkdirBlocking(repRessource);
+//System.out.println("##### On va créer un dossier ici : "+fileSys);
+                    fileSys.mkdirsBlocking(repExercice, null);
+//System.out.println("##### Et de un !!! ");
+                    fileSys.mkdirsBlocking(repRessource);
 
                     /** Déplacement des fichers dans le repertoire adéquat*/
-System.out.println("##### Mise en place du système de fichier");
+//System.out.println("##### Mise en place du système de fichier");
                     while(it.hasNext()){
                         FileUpload fu = it.next();
                         //Nom du fichier dans le formulaire
@@ -388,7 +388,7 @@ System.out.println("##### Mise en place du système de fichier");
                     mongoClient.insert("Exercices", exercice, res -> {
 
                         if (res.succeeded()) {
-System.out.println("##### Dézippe du driver + création d'un docker associé.");
+//System.out.println("##### Dézippe du driver + création d'un docker associé.");
                             //Création commandes System
                             String commande = "unzip "+repExercice+"/drivers.zip -d "+repExercice+"/";
                             String commande2 = "docker build -t plateforme:"+nomExoRepertoire+" --build-arg driver_dir="+repExercice+"/drivers .";
@@ -414,7 +414,7 @@ System.out.println("##### Dézippe du driver + création d'un docker associé.")
                             .end("Exercice enregistré");
 
                         } else {
-System.out.println("##### Erreur 400 -- Insertion n'a pas réussi.");
+//System.out.println("##### Erreur 400 -- Insertion n'a pas réussi.");
                             routingContext.response()
                             .setStatusCode(401)
                             .putHeader("content-type", "html/text; charset=utf-8")
@@ -423,7 +423,7 @@ System.out.println("##### Erreur 400 -- Insertion n'a pas réussi.");
                     });
 
                 } else {
-System.out.println("##### Exercice déjà présent");
+//System.out.println("##### Exercice déjà présent");
                     //On s'arrêtre tout de suite
                     String err = "Exercice déjà présent";
                     System.out.println(err);
@@ -433,7 +433,7 @@ System.out.println("##### Exercice déjà présent");
                     .end(err);
                 }
             } else {
-System.out.println("##### BD dit 'Fuck'");
+//System.out.println("##### BD dit 'Fuck'");
                 //ERREUR DB
                 res1.cause().printStackTrace();
                 routingContext.response()
