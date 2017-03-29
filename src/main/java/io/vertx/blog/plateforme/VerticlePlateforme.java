@@ -393,6 +393,8 @@ public class VerticlePlateforme extends AbstractVerticle{
                             //Création commandes System
                             String commande = "unzip "+repExercice+"/drivers.zip -d "+repExercice+"/";
                             String commande2 = "docker build -t plateforme:"+nomExoRepertoire+" --build-arg driver_dir="+repExercice+"/drivers .";
+                            System.out.println("Création de l'image docker de l'exercice soumi : ");
+                            System.out.println(commande2);
                             try{
                                 // Execution commandes System
                                 Process proc=Runtime.getRuntime().exec(commande);
