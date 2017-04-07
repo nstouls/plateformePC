@@ -1,5 +1,6 @@
 #import de l'image sur laquelle se baser
-FROM alexandreinsa/base-plateforme:latest
+#FROM alexandreinsa/base-plateforme:latest
+FROM descol/base-plateforme:latest
 MAINTAINER Alexandre Claude <alexandre.claude@insa-lyon.fr>
 
 #On s'attend a recevoir en parametre le nom du repertoire ou se trouve le driver de tests ainsi que la correction
@@ -10,4 +11,4 @@ ADD $driver_dir /java/drivers
 WORKDIR /java
 RUN mkdir build/
 
-ENTRYPOINT javac -cp ./ -d build/ *.java */*.java && java -cp build/ Driver_tests >> ./etudiant/driver_result.txt
+ENTRYPOINT javac -cp ./ -d build/ */*.java && java -cp build/ Driver_tests >> ./etudiant/driver_result.txt
