@@ -150,8 +150,8 @@ public class VerticlePlateforme extends AbstractVerticle{
             fileSys.deleteBlocking(serveurFilePath);
         }
 
-        //String commande = "docker run --rm -v "+pathApp+"/"+repEtudiant+":/java/etudiant plateforme:"+exercice;
-        String commande = "docker run -v "+pathApp+"/"+repEtudiant+":/java/etudiant plateforme:"+exercice;
+        String commande = "docker run --rm -v "+pathApp+"/"+repEtudiant+":/java/etudiant plateforme:"+exercice;
+        //String commande = "docker run -v "+pathApp+"/"+repEtudiant+":/java/etudiant plateforme:"+exercice;
         System.out.println(commande);
         try{
             // Execution du composant docker
@@ -173,7 +173,7 @@ public class VerticlePlateforme extends AbstractVerticle{
         .end(str);
 
         //Suppression du répertoire client
-        //fileSys.deleteRecursiveBlocking(repEtudiant,true);
+        fileSys.deleteRecursiveBlocking(repEtudiant,true);
     }
 
     /** Récupérer tout les exercices de la BD */
