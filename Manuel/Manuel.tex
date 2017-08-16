@@ -26,11 +26,12 @@
 \end{center}
 
 \section{Récupération des sources:}
-Les sources de la plateforme sont accessibles directement via GitHub via cette URL: \url{https://github.com/aclaude1/plateformePC}. Est présent dans ce répertoire:
+Les sources de la plateforme sont accessibles directement via GitHub via cette URL: 
+\url{https://github.com/nstouls/plateformePC}\footnote{Projet d'origine : \url{https://github.com/aclaude1/plateformePC}}. On trouvera notamment dans ce répertoire:
 \begin{enumerate}
-\item Les sources Java du \href{https://github.com/aclaude1/plateformePC/tree/master/src/main/java/io/vertx/blog/plateforme}{serveur}
-\item Les sources du \href{https://github.com/aclaude1/plateformePC/tree/master/ressources}{Front-End}
-\item \href{https://github.com/aclaude1/plateformePC/tree/master/Exemple_HelloWorld}{Un exemple de driver de test}
+\item Les sources Java du \href{https://github.com/nstouls/plateformePC/tree/master/src/main/java/io/vertx/blog/plateforme}{serveur}
+\item Les sources du \href{https://github.com/nstouls/plateformePC/tree/master/ressources}{Front-End}
+\item \href{https://github.com/nstouls/plateformePC/tree/master/Exemple_HelloWorld}{Un exemple de driver de test}
 \end{enumerate}
 
 \section{Configuration de Docker}
@@ -78,7 +79,7 @@ La base mongoDB peut facilement être installée grâce à l'outil Docker, il su
 Le lancement de la base se fait donc via Docker
 La base mongoDB peut facilement être installée grâce à l'outil Docker, il suffit de récupérer la bonne image:
 \begin{lstlisting}[language=bash]
-$ sudo docker -d --name plateformeDB [-v </RepertoireHote>:/data/db] 
+$ sudo docker run -d - -name plateformeDB [-v </RepertoireHote>:/data/db] 
 -p 27017:27017 mongo
 \end{lstlisting}
 Quelques précisions:
@@ -89,14 +90,16 @@ Quelques précisions:
 \textit{Note: il faut que le répertoire hôte soit indiqué via un chemin absolu. Pour plus de précision, se référer \href{https://docs.docker.com/engine/reference/commandline/run/\#/mount-volume--v---read-only}{ici}}
 \end{enumerate}
 La base est maintenant lancée et le serveur saura s'y connecter de manière automatique, tout en créant les différentes COLLECTIONS au besoin. Si jamais la machine hôte tombe en panne, il suffit de relancer le composant, les données seront conservées.
+%  $ sudo docker start plateformeDB
 \begin{lstlisting}[language=bash]
-  $ sudo docker start plateformeDB
+  $ docker run -d --name plateformeDB -v /home/pi/plateformePC/DB:/data/db -p 27017:27017 descol/rpi-mongo
 \end{lstlisting}
 \subsection{Lignes de commandes}
 Il est utile de connaître quelques commandes de shell MongoDB, au cas où on aurait besoin d'aller vérifier directement les données.\\
 Connexion à la base de donnée:
+
 \begin{lstlisting}[language=bash]
-  $ sudo docker exec -it plateformeDB mongo
+ $ sudo docker exec -it plateformeDB mongo
 \end{lstlisting}
 Utilisation de la base de donnée "plateforme" (utilisée par le serveur)
 \begin{lstlisting}[language=bash]

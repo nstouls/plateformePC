@@ -1,2 +1,7 @@
 .gradle/
 Manuel/manuel-installation-plateforme-commented.pdf
+*.aux
+*.log
+*.out
+*.synctex.gz
+*.tex.bak
