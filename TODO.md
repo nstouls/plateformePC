@@ -5,12 +5,20 @@
   hint : while submitting proposition, javac is called three times with 60% CPU and java is called once with 100% CPU. The duration of these calls correspond to the one of the waiting (Java could be for the website as well as for the program execution).
 
 
-* Find how to force UTF8 for every java File including compilation.
+* If compilation fails, File not found error -> forward compilation trace into driver_result.txt ?
 
-* Check wether an exception due to student file produce a crash or not.
 
 
 # Some things done
+
+
+* Find how to force UTF8 for every java File including compilation.
+  * Accents from Driver : done (Compiles with -encoding UTF-8)
+  * Accents from Student file : done (Execute with "-Dfile.encoding=UTF-8")
+
+
+* Check wether an exception due to student file produce a crash or not : no more.
+
 
 * When students upload a proposition, the following error occurs :
 

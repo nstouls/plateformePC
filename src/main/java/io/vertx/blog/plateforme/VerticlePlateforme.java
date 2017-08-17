@@ -150,8 +150,8 @@ public class VerticlePlateforme extends AbstractVerticle{
             fileSys.deleteBlocking(serveurFilePath);
         }
 
-        String commande = "docker run --rm -v "+pathApp+"/"+repEtudiant+":/java/etudiant plateforme:"+exercice;
-        //String commande = "docker run -v "+pathApp+"/"+repEtudiant+":/java/etudiant plateforme:"+exercice;
+        //String commande = "docker run --rm -v "+pathApp+"/"+repEtudiant+":/java/etudiant plateforme:"+exercice;
+        String commande = "docker run -v "+pathApp+"/"+repEtudiant+":/java/etudiant plateforme:"+exercice;
         System.out.println(commande);
         try{
             // Execution du composant docker
@@ -168,12 +168,12 @@ public class VerticlePlateforme extends AbstractVerticle{
 
         String str = readFile(repEtudiant+"/driver_result.txt");
         routingContext.response()
-        .setStatusCode(200)
-        .putHeader("content-type", "text/html; charset=utf-8")
-        .end(str);
+            .setStatusCode(200)
+            .putHeader("content-type", "text/html; charset=utf-8")
+            .end(str);
 
         //Suppression du répertoire client
-        fileSys.deleteRecursiveBlocking(repEtudiant,true);
+        // fileSys.deleteRecursiveBlocking(repEtudiant,true); // --rm
     }
 
     /** Récupérer tout les exercices de la BD */
@@ -478,7 +478,7 @@ public class VerticlePlateforme extends AbstractVerticle{
                 routingContext.response()
                 .setStatusCode(200)
                 .putHeader("content-type", "html/text; charset=utf-8")
-                .end("Exercice suppimé");
+                .end("Exercice supprimé");
             } else {
                 res.cause().printStackTrace();
                 routingContext.response()
