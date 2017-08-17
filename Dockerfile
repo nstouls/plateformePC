@@ -11,7 +11,15 @@ ADD $driver_dir /java/drivers
 WORKDIR /java
 RUN mkdir build/
 
-# ENTRYPOINT javac -encoding UTF-8 -cp ./ -d build/ */*.java && java -cp build/ Driver_tests >> ./etudiant/driver_result.txt
 
-ENTRYPOINT javac -encoding UTF-8 -cp ./ -d build/ */*.java && java "-Dfile.encoding=UTF-8" -cp build/ Driver_tests >> ./etudiant/driver_result.txt
+# ENTRYPOINT javac -encoding UTF-8 -cp ./ -d build/ */*.java && java "-Dfile.encoding=UTF-8" -cp build/ Driver_tests >> ./etudiant/driver_result.txt
 
+ENTRYPOINT touch ./etudiant/compilation_result.txt ; \
+           javac -encoding UTF-8 -cp ./ -d build/ */*.java  2>> ./etudiant/compilation_result.txt 1>>./etudiant/compilation_result.txt ; \
+           if [ -s ./etudiant/compilation_result.txt ] ; then \
+               echo "<p><b>Erreur de compilation</b></p><pre>"             >> ./etudiant/driver_result.txt ; \
+               cat ./etudiant/compilation_result.txt                >> ./etudiant/driver_result.txt ; \
+               echo "</pre>"                                        >> ./etudiant/driver_result.txt ; \
+           else  \
+               java "-Dfile.encoding=UTF-8" -cp build/ Driver_tests >> ./etudiant/driver_result.txt ;\
+           fi 
