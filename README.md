@@ -34,7 +34,7 @@ Running mongoDB :
 
 If Plateforme-fat.jar doesnt exist, it could be generated from the gradle script on a desktop computer :  
 
-* ./gradlew build
+* ./gradlew shadowJar
 
 
 ## Background Running
