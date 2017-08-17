@@ -1,16 +1,17 @@
-# Some things to do
+# Some things TODO
 
 * Find why the submission of file is so long (Very quick on desktop computers, even if in Virtual Machine)
 
   hint : while submitting proposition, javac is called three times with 60% CPU and java is called once with 100% CPU. The duration of these calls correspond to the one of the waiting (Java could be for the website as well as for the program execution).
 
 
+* Add an immediate comment on the student page when sending a code (Something like : "<i>Traitement en cours</i>").
+
+# Some things DONE
+
 * If compilation fails, File not found error -> forward compilation trace into driver_result.txt ?
 
-
-
-# Some things done
-
+  Done via Dockerfile : compilation error stream send in a file. If not empty, copying this file into driver_result into a < pre > ... < /pre > tag.
 
 * Find how to force UTF8 for every java File including compilation.
   * Accents from Driver : done (Compiles with -encoding UTF-8)
