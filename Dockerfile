@@ -11,4 +11,7 @@ ADD $driver_dir /java/drivers
 WORKDIR /java
 RUN mkdir build/
 
-ENTRYPOINT javac -cp ./ -d build/ */*.java && java -cp build/ Driver_tests >> ./etudiant/driver_result.txt
+# ENTRYPOINT javac -encoding UTF-8 -cp ./ -d build/ */*.java && java -cp build/ Driver_tests >> ./etudiant/driver_result.txt
+
+ENTRYPOINT javac -encoding UTF-8 -cp ./ -d build/ */*.java && java "-Dfile.encoding=UTF-8" -cp build/ Driver_tests >> ./etudiant/driver_result.txt
+
