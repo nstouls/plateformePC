@@ -155,8 +155,7 @@
             load();
 
             $("#uploadForm").submit(function(event){
-                
-$("#retour").html("<div class=\"panel-heading\"><h2 class=\"panel-title\"><i>Veuillez patienter ... traitement en cours ...</i></h2></div>");
+                $("#retour").html("<div class=\"panel-heading\"><h2 class=\"panel-title\"><i>Veuillez patienter ... traitement en cours ...</i></h2></div>");
 
                 var exo = window.location.search.split('=')[1];
                 // Permet de ne pas recharger la page après l'envoie
