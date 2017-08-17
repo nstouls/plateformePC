@@ -155,6 +155,8 @@
             load();
 
             $("#uploadForm").submit(function(event){
+                //$("#retour").html("<i>Traitement en cours ...</i>");
+
                 var exo = window.location.search.split('=')[1];
                 // Permet de ne pas recharger la page après l'envoie
                 event.preventDefault();
