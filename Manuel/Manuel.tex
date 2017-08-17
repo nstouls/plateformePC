@@ -69,6 +69,47 @@ On peut vérifier la présence de l'image grâce à:
   $ sudo docker images
 \end{lstlisting}
 
+
+
+
+\subsection{Quelques manipulations de Docker}
+
+Voir la liste des Dockers chargés ou en cours d'exécution : 
+
+\begin{lstlisting}[language=bash]
+  $ docker ps -a 
+\end{lstlisting}
+
+Décharger un Docker chargé (restera présent localement) : 
+
+\begin{lstlisting}[language=bash]
+  $ docker rm <nom> 
+\end{lstlisting}
+
+
+Lecture des logs d'un Docker : 
+
+\begin{lstlisting}[language=bash]
+  $ docker logs <nom> 
+\end{lstlisting}
+
+
+Voir la liste des Images chargées localement : 
+
+\begin{lstlisting}[language=bash]
+  $ docker images
+\end{lstlisting}
+
+
+Effacer une image : 
+
+\begin{lstlisting}[language=bash]
+  $ docker rmi <nom> 
+\end{lstlisting}
+
+
+
+
 \section{La base MongoDB}
 \subsection{Récupération de l'image Docker}
 La base mongoDB peut facilement être installée grâce à l'outil Docker, il suffit de récupérer la bonne image:
