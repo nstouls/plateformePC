@@ -45,9 +45,9 @@ public class VerticlePlateforme extends AbstractVerticle{
 
     /**La méthode start est appelée quand un verticle est déployé
     On peut aussi impmémenter une méthode stop()
-    L'objet Future qui informe Vert.X si la méthode start est finie ou non:
-    Vert.X est ayschrone, quand un verticle est déployé, il attend pas que les
-    traitements de la méthode start soit finie. L'objet Future permet de savoir
+    L'objet Future informe Vert.X si la méthode start est finie ou non:
+    Vert.X est ayschrone, quand un verticle est déployé, il n'attend pas que les
+    traitements de la méthode start soient finis. L'objet Future permet de savoir
     si ces traitements sont réalisés ou non
     */
 
@@ -93,8 +93,8 @@ public class VerticlePlateforme extends AbstractVerticle{
 
         router.delete("/api/delexo").blockingHandler(this::delExo);
 
-        /** On crée le server HTTP. Il faut passer le router dans l'écouter de requête
-        De plus, nous devons spécifer que les requête sur ce router sont acceptées
+        /** On crée le server HTTP. Il faut passer le router dans l'écouteur de requête
+        De plus, nous devons spécifer que les requêtes sur ce router sont acceptées
         */
         vertx
         .createHttpServer()
@@ -203,22 +203,19 @@ public class VerticlePlateforme extends AbstractVerticle{
         JsonObject query = new JsonObject().put("nomExoRepertoire",nomExoRepertoire);
 
         mongoClient.findBatch("Exercices", query, res -> {
-
             if (res.succeeded()) {
-
-                routingContext.response()
-                .setStatusCode(200)
-                .putHeader("content-type", "application/json; charset=utf-8")
-                .end(res.result().encodePrettily());
-
+                if (res.result() != null) {
+                    routingContext.response()
+                        .setStatusCode(200)
+                        .putHeader("content-type", "application/json; charset=utf-8")
+                        .end(res.result().encodePrettily());
+                }
             } else {
-
-                res.cause().printStackTrace();
                 res.cause().printStackTrace();
                 routingContext.response()
-                .setStatusCode(401)
-                .putHeader("content-type", "text/txt; charset=utf-8")
-                .end("Exercice non trouvé");
+                    .setStatusCode(401)
+                    .putHeader("content-type", "text/txt; charset=utf-8")
+                    .end("Exercice non trouvé");
             }
         });
     }

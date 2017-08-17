@@ -30,7 +30,7 @@ Running mongoDB :
 
  * docker start plateformeDB
 
- * sudo java -jar Plateforme-fat.jar
+ * sudo java -jar build/libs/Plateforme-fat.jar
 
 If Plateforme-fat.jar doesnt exist, it could be generated from the gradle script on a desktop computer :  
 
@@ -44,4 +44,13 @@ If Plateforme-fat.jar doesnt exist, it could be generated from the gradle script
  * sudo apt-get install screen
 
 * Launch the platform through screen :
- * screen sudo java -jar Plateforme-fat.jar
+ * screen sudo java -jar build/libs/Plateforme-fat.jar
+
+
+## Troubleshooting
+
+* To revert MongoDB from a crash :
+
+  * docker run --rm --volumes-from plateformeDB descol/rpi-mongo unlink "/mongodb/data/mongod.lock"
+  * docker run --rm -it -p 27017:27017  --volumes-from plateformeDB descol/rpi-mongo mongod --dbpath /mongodb/data/ --repair
+  * docker start plateformeDB
