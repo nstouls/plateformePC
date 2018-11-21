@@ -1,0 +1,18 @@
+# Script inspired by : 
+#   https://toub.es/2017/08/08/how-to-start-a-docker-container-at-boot-time/
+# 
+# to add this service in your system and start it at startup, just do :
+#   sudo ln -s /home/pi/plateformePC/scripts/rpi-plateformePC.service /etc/systemd/system/rpi-plateformePC.service 
+
+[Unit]
+Description=Service Systemd pour lancement au démarrage de plateformePC
+Requires=docker.service
+After=docker.service
+
+[Service]
+WorkingDirectory=/home/pi/plateformePC/
+ExecStart=/home/pi/plateformePC/scripts/start.sh
+ExecStop=/home/pi/plateformePC/scripts/stop.sh
+
+[Install]
+WantedBy=default.target

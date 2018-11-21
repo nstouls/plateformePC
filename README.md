@@ -6,19 +6,22 @@ This version of the tool is modified to be installed on a RaspberryPI 2.
 ## Installation
 
 * Install Debian, Docker, MongoDB and OpenJDK
- * curl -sSL https://get.docker.com/ | sh
- * sudo usermod -aG docker pi
- * sudo apt-get install openjdk-8-jdk git
- * sudo apt-get upgrade
- * docker pull descol/rpi-mongo
+```bash
+    curl -sSL https://get.docker.com/ | sh
+    sudo usermod -aG docker pi
+    sudo apt-get install openjdk-8-jdk git
+    sudo apt-get upgrade
+    docker pull descol/rpi-mongo
+```
+
 
 * Configure classpath :
- * echo "export JAVA_HOME=/usr/lib/jvm/default-java/" >> ~/.bashrc
+  * echo "export JAVA_HOME=/usr/lib/jvm/default-java/" >> ~/.bashrc
 
 * Deploy this tool:
- * Clone this git
- * cd base-plateforme
- * docker build -t descol/base-plateforme .
+  * Clone this git
+  * cd base-plateforme
+  * docker build -t descol/base-plateforme .
 
 
 ## Starting platform
@@ -26,11 +29,11 @@ This version of the tool is modified to be installed on a RaspberryPI 2.
 Running mongoDB :
 * Run a mongoDB instance:
 
- * docker run -d --name plateformeDB -v /home/pi/plateformePC/DB:/data/db -p 27017:27017 descol/rpi-mongo
+  * docker run -d --name plateformeDB -v /home/pi/plateformePC/DB:/data/db -p 27017:27017 descol/rpi-mongo
 
- * docker start plateformeDB
+  * docker start plateformeDB
 
- * sudo java -jar build/libs/Plateforme-fat.jar
+  * sudo java -jar build/libs/Plateforme-fat.jar
 
 If Plateforme-fat.jar doesnt exist, it could be generated from the gradle script on a desktop computer :  
 
